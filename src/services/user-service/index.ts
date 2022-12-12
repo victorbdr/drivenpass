@@ -19,6 +19,14 @@ async function createUser(data: newUser) {
 
 async function checkEmail(email: string) {
   const emailCheck = await userRepository.findByEmail(email);
+  if (emailCheck) {
+    console.log("aqui");
+    throw unauthorizedError();
+  }
+  return emailCheck;
+}
+async function checkExistingEmail(email: string) {
+  const emailCheck = await userRepository.findByEmail(email);
   if (!emailCheck) {
     throw unauthorizedError();
   }
@@ -32,7 +40,7 @@ async function checkPassword(password: string, userPassword: string) {
 }
 async function signIn(data: newUser) {
   const { email, password } = data;
-  const user = await checkEmail(email);
+  const user = await checkExistingEmail(email);
   checkPassword(password, user.password);
   const token = jwt.sign(
     { id: user.id, email: user.email },
