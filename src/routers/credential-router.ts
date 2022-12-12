@@ -11,6 +11,7 @@ import { authenticateToken } from "@/middlewares";
 const credentialRouter = Router();
 credentialRouter
   .get("/", authenticateToken, credentialsGet)
+  .get("/:id", authenticateToken, credentialsById)
   .post("/", authenticateToken, credentialPost)
   .delete("/", authenticateToken, deleteCredential);
 

@@ -9,6 +9,7 @@ loadEnv();
 
 import { handleApplicationErrors } from "@/middlewares";
 import { userRouter, credentialRouter } from "@/routers";
+import { networkRouter } from "./routers/network-router";
 
 const app = express();
 app
@@ -17,6 +18,7 @@ app
   .get("/health", (_req, res) => res.send("OK!"))
   .use("/users", userRouter)
   .use("/credentials", credentialRouter)
+  .use("/networks", networkRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
