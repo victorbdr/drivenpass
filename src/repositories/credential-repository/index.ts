@@ -4,7 +4,7 @@ import { unauthorizedError } from "@/errors";
 
 async function getCredential(id: number, userId: number) {
   return await prisma.credential.findFirst({
-    where: { id: id, userId },
+    where: { id: id, userId: userId },
   });
 }
 async function getUserCredentials(userId: number) {
@@ -17,8 +17,9 @@ async function uniqueTitle(userId: number, title: string) {
     where: { title: { equals: title, mode: "insensitive" }, userId },
   });
   if (tittleExists) {
-    throw unauthorizedError;
+    throw unauthorizedError();
   }
+  return tittleExists;
 }
 
 async function createCredential(userId: number, credential: credentialsBody) {
@@ -30,7 +31,7 @@ async function createCredential(userId: number, credential: credentialsBody) {
 }
 
 async function deleteCredential(id: number) {
-  const deleteById = prisma.credential.delete({
+  const deleteById = prisma.credential.deleteMany({
     where: {
       id: id,
     },
