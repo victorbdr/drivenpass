@@ -41,7 +41,7 @@ async function checkPassword(password: string, userPassword: string) {
 async function signIn(data: newUser) {
   const { email, password } = data;
   const user = await checkExistingEmail(email);
-  checkPassword(password, user.password);
+  await checkPassword(password, user.password);
   const token = jwt.sign(
     { id: user.id, email: user.email },
     process.env.JWT_SECRET
