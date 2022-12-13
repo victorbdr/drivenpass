@@ -169,6 +169,31 @@ describe("/delete/:id /networks", () => {
         .set("Authorization", `Bearer ${token}`);
       expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
+    it("should respond with status 404 for invalid user network id", async () => {
+      const login = generateLogin();
+      const user = await createUser(login);
+      const send = await server.post("/users").send(login);
+      const token = send.body.token;
+      createNetwork(user.id);
+
+      const response = await server
+        .delete("/networks/0")
+
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
+    });
+    it("should respond with status 404 for invalid user network id", async () => {
+      const login = generateLogin();
+      const user = await createUser(login);
+      const send = await server.post("/users").send(login);
+      const token = send.body.token;
+      createNetwork(user.id);
+
+      const response = await server
+        .delete("/networks/201")
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
+    });
     it("should respond with status 200 for user valid network id", async () => {
       const login = generateLogin();
       const user = await createUser(login);

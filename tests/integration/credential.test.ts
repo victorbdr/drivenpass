@@ -12,7 +12,7 @@ const generateValidBody = () => ({
   title: faker.lorem.word(),
   url: faker.internet.url(),
   username: faker.internet.userName(),
-  password: faker.internet.password(6),
+  password: faker.internet.password(),
 });
 const generateLogin = () => ({
   email: faker.internet.email(),
